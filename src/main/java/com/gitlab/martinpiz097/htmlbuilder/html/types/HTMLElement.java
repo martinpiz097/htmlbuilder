@@ -151,14 +151,7 @@ public class HTMLElement implements HtmlDrawable {
     public String draw() {
         StringBuilder sbHtml = new StringBuilder();
         sbHtml.append('<').append(name);
-        if (hasAttributes()) {
-            sbHtml.append(' ');
-            for (int i = 0; i < listAttributes.size(); i++) {
-                sbHtml.append(listAttributes.get(i).draw())
-                        .append(' ');
-            }
-            sbHtml.deleteCharAt(sbHtml.length()-1);
-        }
+        appendAttributes(sbHtml);
         sbHtml.append(">\n");
         for (int i = 0; i < listChilds.size(); i++)
             sbHtml.append(listChilds.get(i).draw());

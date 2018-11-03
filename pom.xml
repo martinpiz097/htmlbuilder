@@ -6,7 +6,7 @@
 
     <groupId>com.gitlab.martinpiz097</groupId>
     <artifactId>htmlbuilder</artifactId>
-    <version>0.1-RC</version>
+    <version>0.2-RC</version>
 
     <build>
         <plugins>

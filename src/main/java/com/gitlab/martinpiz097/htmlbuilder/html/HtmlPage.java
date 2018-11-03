@@ -5,7 +5,7 @@ import com.gitlab.martinpiz097.htmlbuilder.html.interfaces.Drawable;
 
 public class HtmlPage implements Drawable {
 
-    private Html html;
+    private final Html html;
 
     public HtmlPage() {
         html = new Html();
@@ -21,6 +21,10 @@ public class HtmlPage implements Drawable {
 
     public HtmlPage(String title, String charset, String language) {
         html = new Html(title, charset, language);
+    }
+
+    public Html getHtml() {
+        return html;
     }
 
     @Override

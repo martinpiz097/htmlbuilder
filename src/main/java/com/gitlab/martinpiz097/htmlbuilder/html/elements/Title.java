@@ -10,6 +10,6 @@ public class Title extends HTMLContentElement {
     }
 
     public Title(HTMLElement parent, String content) {
-        super(parent, "title", content);
+        super("title", parent, content);
     }
 }

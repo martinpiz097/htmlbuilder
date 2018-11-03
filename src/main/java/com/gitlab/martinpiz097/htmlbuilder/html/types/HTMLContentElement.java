@@ -1,117 +1,27 @@
 package com.gitlab.martinpiz097.htmlbuilder.html.types;
 
 import com.gitlab.martinpiz097.htmlbuilder.html.interfaces.HtmlDrawable;
-import com.gitlab.martinpiz097.htmlbuilder.html.types.HTMLAttribute;
-import com.gitlab.martinpiz097.htmlbuilder.html.types.HTMLElement;
 
 import java.util.ArrayList;
 
-public class HTMLContentElement implements HtmlDrawable {
-    protected HTMLElement parent;
-    protected String name;
-    protected ArrayList<HTMLAttribute> listAttributes;
+public class HTMLContentElement extends HTMLElement {
     protected String content;
 
     public HTMLContentElement(String name) {
-        this((HTMLElement) null, name);
+        this(name, null, null);
     }
 
-    public HTMLContentElement(HTMLElement parent, String name) {
-        this(parent, name, null);
-    }
-
-    public HTMLContentElement(HTMLElement parent, String name, String content) {
-        this.parent = parent;
-        this.name = name;
+    public HTMLContentElement(String name, HTMLElement parent, String content) {
+        super(name, parent);
         this.content = content;
-        listAttributes = new ArrayList<>();
     }
 
     public HTMLContentElement(String name, String content) {
-        this(null, name, content);
-    }
-
-    @Override
-    public boolean hasAttribute(String name) {
-        return listAttributes.parallelStream()
-                .anyMatch(attr->attr.getKey().equals(name));
-    }
-
-    @Override
-    public boolean hasAttributes() {
-        return !listAttributes.isEmpty();
-    }
-
-    public boolean hasParent() {
-        return parent != null;
+        this(name, null, content);
     }
 
     public boolean hasContent() {
         return content != null;
-    }
-
-    @Override
-    public HTMLElement getParent() {
-        return parent;
-    }
-
-    @Override
-    public void setParent(HTMLElement parent) {
-        this.parent = parent;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public void addAttribute(HTMLAttribute attr) {
-        listAttributes.add(attr);
-    }
-
-    @Override
-    public ArrayList<HTMLAttribute> getAttributes() {
-        return listAttributes;
-    }
-
-    @Override
-    public HTMLAttribute getAttribute(String name) {
-        return null;
-    }
-
-    public void setAttributes(ArrayList<HTMLAttribute> listAttributes) {
-        this.listAttributes = listAttributes;
-    }
-
-    @Override
-    public void setAttribute(String name, Object value) {
-        HTMLAttribute attribute;
-        for (int i = 0; i < listAttributes.size(); i++) {
-            attribute = listAttributes.get(i);
-            if (attribute.getKey().equals(name)) {
-                attribute.setValue(value);
-                listAttributes.set(i, attribute);
-                break;
-            }
-        }
-    }
-
-    @Override
-    public void deleteAttribute(String name) {
-        for (int i = 0; i < listAttributes.size(); i++)
-            if (listAttributes.get(i).getKey().equals(name))
-                listAttributes.remove(i);
-    }
-
-    @Override
-    public void deleteAttributes() {
-        listAttributes.clear();
     }
 
     public String getContent() {
@@ -126,17 +36,17 @@ public class HTMLContentElement implements HtmlDrawable {
     public String draw() {
         StringBuilder sbHtml = new StringBuilder();
         sbHtml.append('<').append(name);
-        if (hasAttributes()) {
-            sbHtml.append(' ');
-            for (int i = 0; i < listAttributes.size(); i++) {
-                sbHtml.append(listAttributes.get(i).draw())
-                        .append(' ');
-            }
-            sbHtml.deleteCharAt(sbHtml.length()-1);
+        appendAttributes(sbHtml);
+        sbHtml.append(">");
+        if (content != null)
+            sbHtml.append('\n').append(content).append('\n');
+        else if (listChilds.size() > 0) {
+            sbHtml.append('\n');
+            for (int i = 0; i < listChilds.size(); i++)
+                sbHtml.append(listChilds.get(i).draw());
+            sbHtml.append('\n');
         }
-        sbHtml.append(">\n")
-                .append(content)
-                .append("\n</").append(name).append(">\n");
+        sbHtml.append("</").append(name).append(">\n");
         return sbHtml.toString();
     }
 

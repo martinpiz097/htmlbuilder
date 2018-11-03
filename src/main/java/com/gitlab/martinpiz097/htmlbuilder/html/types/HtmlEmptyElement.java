@@ -6,22 +6,15 @@ public class HtmlEmptyElement extends HTMLContentElement {
         super(name);
     }
 
-    public HtmlEmptyElement(HTMLElement parent, String name) {
-        super(parent, name);
+    public HtmlEmptyElement(String name, HTMLElement parent) {
+        super(name, parent, null);
     }
 
     @Override
     public String draw() {
         StringBuilder sbHtml = new StringBuilder();
         sbHtml.append('<').append(name);
-        if (hasAttributes()) {
-            sbHtml.append(' ');
-            for (int i = 0; i < listAttributes.size(); i++) {
-                sbHtml.append(listAttributes.get(i).draw())
-                        .append(' ');
-            }
-            sbHtml.deleteCharAt(sbHtml.length()-1);
-        }
+        appendAttributes(sbHtml);
         sbHtml.append("/>\n");
         return sbHtml.toString();
     }
