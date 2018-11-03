@@ -2,7 +2,7 @@
     - Se construyen clases base para permitir la creacio de paginas
     web de manera comoda y eficiente.
     
- - 0.2
+ - 0.2-RC
     - Se optimiza el metodo draw heredando ciertas funcionalidades de interfaz en comun
     - Se crea funcionalidad para configurar los atributos id y class
     en los elementos html
